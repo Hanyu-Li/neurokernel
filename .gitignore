@@ -1,3 +1,5 @@
+build
+dist
 *.mat
 *.h5
 *.gexf.gz
