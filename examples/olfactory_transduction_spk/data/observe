@@ -1,0 +1,170 @@
+<gexf version="1.1" xmlns="http://www.gexf.net/1.1draft" xmlns:viz="http://www.gexf.net/1.1draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance">
+  <graph defaultedgetype="directed" mode="static">
+    <attributes class="node" mode="static">
+      <attribute id="0" title="V_prev" type="double" />
+      <attribute id="1" title="name" type="string" />
+      <attribute id="2" title="X_1" type="double" />
+      <attribute id="3" title="selector" type="string" />
+      <attribute id="4" title="X_2" type="double" />
+      <attribute id="5" title="X_3" type="double" />
+      <attribute id="6" title="V" type="double" />
+      <attribute id="7" title="extern" type="boolean" />
+      <attribute id="8" title="model" type="string" />
+      <attribute id="9" title="spiking" type="boolean" />
+      <attribute id="10" title="public" type="boolean" />
+    </attributes>
+    <nodes>
+      <node id="0" label="0">
+        <attvalues>
+          <attvalue for="0" value="-6.6156932949" />
+          <attvalue for="1" value="sensory_0_s" />
+          <attvalue for="2" value="0.0" />
+          <attvalue for="3" value="/gen/out/spk/0" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="-6.6156932949" />
+          <attvalue for="7" value="true" />
+          <attvalue for="8" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="1" label="1">
+        <attvalues>
+          <attvalue for="0" value="-7.90369547539" />
+          <attvalue for="1" value="sensory_1_s" />
+          <attvalue for="2" value="0.0" />
+          <attvalue for="3" value="/gen/out/spk/1" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="-7.90369547539" />
+          <attvalue for="7" value="true" />
+          <attvalue for="8" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="2" label="2">
+        <attvalues>
+          <attvalue for="0" value="-1.56020614307" />
+          <attvalue for="1" value="sensory_2_s" />
+          <attvalue for="2" value="0.0" />
+          <attvalue for="3" value="/gen/out/spk/2" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="-1.56020614307" />
+          <attvalue for="7" value="true" />
+          <attvalue for="8" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="3" label="3">
+        <attvalues>
+          <attvalue for="0" value="-3.2269259714" />
+          <attvalue for="1" value="sensory_3_s" />
+          <attvalue for="2" value="0.0" />
+          <attvalue for="3" value="/gen/out/spk/3" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="-3.2269259714" />
+          <attvalue for="7" value="true" />
+          <attvalue for="8" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="4" label="4">
+        <attvalues>
+          <attvalue for="0" value="-3.87375042129" />
+          <attvalue for="1" value="sensory_4_s" />
+          <attvalue for="2" value="0.0" />
+          <attvalue for="3" value="/gen/out/spk/4" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="-3.87375042129" />
+          <attvalue for="7" value="true" />
+          <attvalue for="8" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="5" label="5">
+        <attvalues>
+          <attvalue for="0" value="-3.82069068792" />
+          <attvalue for="1" value="sensory_5_s" />
+          <attvalue for="2" value="0.0" />
+          <attvalue for="3" value="/gen/out/spk/5" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="-3.82069068792" />
+          <attvalue for="7" value="true" />
+          <attvalue for="8" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="6" label="6">
+        <attvalues>
+          <attvalue for="0" value="-4.27221033056" />
+          <attvalue for="1" value="sensory_6_s" />
+          <attvalue for="2" value="0.0" />
+          <attvalue for="3" value="/gen/out/spk/6" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="-4.27221033056" />
+          <attvalue for="7" value="true" />
+          <attvalue for="8" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="7" label="7">
+        <attvalues>
+          <attvalue for="0" value="-5.33022418563" />
+          <attvalue for="1" value="sensory_7_s" />
+          <attvalue for="2" value="0.0" />
+          <attvalue for="3" value="/gen/out/spk/7" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="-5.33022418563" />
+          <attvalue for="7" value="true" />
+          <attvalue for="8" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="8" label="8">
+        <attvalues>
+          <attvalue for="0" value="-8.00750466391" />
+          <attvalue for="1" value="sensory_8_s" />
+          <attvalue for="2" value="0.0" />
+          <attvalue for="3" value="/gen/out/spk/8" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="-8.00750466391" />
+          <attvalue for="7" value="true" />
+          <attvalue for="8" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="9" label="9">
+        <attvalues>
+          <attvalue for="0" value="-5.36173295615" />
+          <attvalue for="1" value="sensory_9_s" />
+          <attvalue for="2" value="0.0" />
+          <attvalue for="3" value="/gen/out/spk/9" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="-5.36173295615" />
+          <attvalue for="7" value="true" />
+          <attvalue for="8" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges />
+  </graph>
+</gexf>

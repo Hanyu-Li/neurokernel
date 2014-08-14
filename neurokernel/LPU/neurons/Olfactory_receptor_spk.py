@@ -10,11 +10,11 @@ from pycuda.compiler import SourceModule
 import tables
 from jinja2 import Template
 
-class Olfactory_receptor(BaseNeuron):
-    def __init__(self, n_dict, V, dt , debug=False, LPU_id=None):
+class Olfactory_receptor_spk(BaseNeuron):
+    def __init__(self, n_dict, spk, dt , debug=False, LPU_id=None):
         self.num_neurons = len(n_dict['id'])
         self.LPU_id = None
-        super(Olfactory_receptor, self).__init__(n_dict, V, dt, debug, LPU_id)
+        #super(Olfactory_receptor_spk, self).__init__(n_dict, spk, dt, debug, LPU_id)
         self.debug = debug
 
         self.dt = dt
@@ -31,16 +31,18 @@ class Olfactory_receptor(BaseNeuron):
 	self.state = garray.to_gpu(np.asarray(init_state, dtype=np.double))
 
 
-        self.V = V
-	#self.V       = garray.to_gpu(np.asarray(n_dict['V'],       dtype=np.double))
-	self.spk = garray.to_gpu(np.asarray(np.zeros((self.num_neurons,1)), dtype=np.int32))
+        #self.V = V
+	self.spk = spk
+	self.V       = garray.to_gpu(np.asarray(n_dict['V'],       dtype=np.double))
+	#self.spk = garray.to_gpu(np.asarray(np.zeros((self.num_neurons,1)), dtype=np.int32))
 	self.V_prev  = garray.to_gpu(np.asarray(n_dict['V_prev'],  dtype=np.double))
 	self.X_1     = garray.to_gpu(np.asarray(n_dict['X_1'],     dtype=np.double))
 	self.X_2     = garray.to_gpu(np.asarray(n_dict['X_2'],     dtype=np.double))
 	self.X_3     = garray.to_gpu(np.asarray(n_dict['X_3'],     dtype=np.double))
 	#self.I_ext = garray.to_gpu(np.asarray([1]*self.num_neurons, dtype=np.double))
 	
-        cuda.memcpy_htod(int(self.V), np.asarray(n_dict['V'], dtype=np.double))
+        #cuda.memcpy_htod(int(self.V), np.asarray(n_dict['V'], dtype=np.double))
+        #cuda.memcpy_htod(int(self.spk), np.asarray(np.zeros((self.num_neurons,1)), dtype=np.double))
 	self.update_olfactory_transduction = self.get_olfactory_transduction_kernel()
 	self.update_hhn = self.get_hhn_kernel()
 
@@ -50,7 +52,11 @@ class Olfactory_receptor(BaseNeuron):
             self.I_file = tables.openFile(self.LPU_id + "_I.h5", mode="w")
             self.I_file.createEArray("/","array", \
                                      tables.Float64Atom(), (0,self.num_neurons))
-	#debugging
+	    
+            self.V_file = tables.openFile(self.LPU_id + "_V.h5", mode="w")
+            self.V_file.createEArray("/","array", \
+                                     tables.Float64Atom(), (0,self.num_neurons))
+	print self.spk
 
 
     @property
@@ -60,9 +66,30 @@ class Olfactory_receptor(BaseNeuron):
 	self.update_olfactory_transduction.prepared_async_call(self.grid, self.block,st, self.dt, self.I.gpudata, self.binding_rate.gpudata, self.state.gpudata, self.I_drive.gpudata)
 	 
 	for i in range(10):
-	    self.update_hhn.prepared_async_call(self.grid, self.block, st, self.spk.gpudata, self.num_neurons, self.dt*100,self.I_drive.gpudata,self.X_1.gpudata, self.X_2.gpudata, self.X_3.gpudata, self.V, self.V_prev.gpudata)
+	    self.update_hhn.prepared_async_call(self.grid, self.block, st, self.spk, self.num_neurons, self.dt*100,self.I_drive.gpudata,self.X_1.gpudata, self.X_2.gpudata, self.X_3.gpudata, self.V.gpudata, self.V_prev.gpudata)
         if self.debug:
             self.I_file.root.array.append(self.I.get().reshape((1,-1)))
+            self.V_file.root.array.append(self.V.get().reshape((1,-1)))
+
+
+    @property
+    def update_I_override(self): return True
+
+    def update_I(self, synapse_state, st=None):
+        self.I.fill(0)
+        if self._pre.size>0:
+            self._update_I_non_cond.prepared_async_call(self._grid_get_input,\
+                self._block_get_input, st, int(synapse_state), \
+                self._cum_num_dendrite.gpudata, self._num_dendrite.gpudata, self._pre.gpudata,
+                self.I.gpudata)
+        if self._cond_pre.size>0:
+            self._update_I_cond.prepared_async_call(self._grid_get_input,\
+                self._block_get_input, st, int(synapse_state), \
+                self._cum_num_dendrite_cond.gpudata, self._num_dendrite_cond.gpudata,
+                self._cond_pre.gpudata, self.I.gpudata, self.V.gpudata, \
+                self._V_rev.gpudata)
+        
+
 
 
     def get_olfactory_transduction_kernel(self):
