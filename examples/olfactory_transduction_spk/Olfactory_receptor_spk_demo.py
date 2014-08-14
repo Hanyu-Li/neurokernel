@@ -23,7 +23,7 @@ from neurokernel.tools.comm import get_random_port
 from neurokernel.LPU.LPU import LPU
 
 dt = 1e-4
-dur = 1.0
+dur = 25.0
 steps = int(dur/dt)
 
 parser = argparse.ArgumentParser()
