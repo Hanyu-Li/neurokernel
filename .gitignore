@@ -1,0 +1,6 @@
+*.mat
+*.h5
+*.gexf.gz
+*.pyc
+*.ipynb_checkpoints
+*.egg-info
