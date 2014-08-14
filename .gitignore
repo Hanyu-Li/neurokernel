@@ -1,5 +1,6 @@
 build
 dist
+*.swp
 *.mat
 *.h5
 *.gexf.gz

@@ -481,8 +481,9 @@ class LPU(Module, object):
             synapse.update_state(self.buffer)
 
         if self.debug:
-            self.gpot_buffer_file.root.array.append( \
-                self.buffer.gpot_buffer.get().reshape(1,self.gpot_delay_steps,-1) )
+            if self.my_num_gpot_neurons > 0:
+                self.gpot_buffer_file.root.array.append( \
+                    self.buffer.gpot_buffer.get().reshape(1,self.gpot_delay_steps,-1) )
             self.synapse_state_file.root.array.append( \
                 self.synapse_state.get().reshape(1,-1))
         
@@ -546,7 +547,8 @@ class LPU(Module, object):
 
             '''
             self.gpot_buffer_file = tables.openFile(self.id + '_buffer.h5','w')
-            self.gpot_buffer_file.createEArray("/","array", \
+	    if self.my_num_gpot_neurons > 0:
+		self.gpot_buffer_file.createEArray("/","array", \
                         tables.Float64Atom(), (0,self.gpot_delay_steps, self.my_num_gpot_neurons))
 
             self.synapse_state_file = tables.openFile(self.id + '_synapses.h5','w')
@@ -755,10 +757,10 @@ class LPU(Module, object):
                         self.V.dtype.itemsize*self.idx_start_gpot[i], \
                                                self.dt, debug=self.debug)
 
-        if not neuron.update_I_override:
-            baseneuron.BaseNeuron.__init__(neuron, n, int(int(self.V.gpudata) +  \
-                        self.V.dtype.itemsize*self.idx_start_gpot[i]), \
-                                           self.dt, debug=self.debug, LPU_id=self.id)
+	    if not neuron.update_I_override:
+		baseneuron.BaseNeuron.__init__(neuron, n, int(int(self.V.gpudata) +  \
+			    self.V.dtype.itemsize*self.idx_start_gpot[i]), \
+					       self.dt, debug=self.debug, LPU_id=self.id)
 
         return neuron
 

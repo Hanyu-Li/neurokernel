@@ -14,7 +14,7 @@ class Olfactory_receptor_spk(BaseNeuron):
     def __init__(self, n_dict, spk, dt , debug=False, LPU_id=None):
         self.num_neurons = len(n_dict['id'])
         self.LPU_id = None
-        #super(Olfactory_receptor_spk, self).__init__(n_dict, spk, dt, debug, LPU_id)
+        super(Olfactory_receptor_spk, self).__init__(n_dict, spk, dt, debug, LPU_id)
         self.debug = debug
 
         self.dt = dt
@@ -72,6 +72,7 @@ class Olfactory_receptor_spk(BaseNeuron):
             self.V_file.root.array.append(self.V.get().reshape((1,-1)))
 
 
+    """
     @property
     def update_I_override(self): return True
 
@@ -92,6 +93,7 @@ class Olfactory_receptor_spk(BaseNeuron):
 
 
 
+    """
     def get_olfactory_transduction_kernel(self):
 	
 	template = Template("""
