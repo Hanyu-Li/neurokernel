@@ -1,0 +1,648 @@
+<gexf version="1.1" xmlns="http://www.gexf.net/1.1draft" xmlns:viz="http://www.gexf.net/1.1draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance">
+  <graph defaultedgetype="directed" mode="static">
+    <attributes class="edge" mode="static">
+      <attribute id="11" title="slope" type="double" />
+      <attribute id="12" title="saturation" type="double" />
+      <attribute id="13" title="name" type="string" />
+      <attribute id="14" title="power" type="integer" />
+      <attribute id="15" title="delay" type="integer" />
+      <attribute id="16" title="conductance" type="boolean" />
+      <attribute id="17" title="threshold" type="double" />
+      <attribute id="18" title="model" type="string" />
+      <attribute id="19" title="class" type="integer" />
+      <attribute id="20" title="reverse" type="double" />
+    </attributes>
+    <attributes class="node" mode="static">
+      <attribute id="0" title="model" type="string" />
+      <attribute id="1" title="name" type="string" />
+      <attribute id="2" title="selector" type="string" />
+      <attribute id="3" title="V_prev" type="double" />
+      <attribute id="4" title="X_1" type="double" />
+      <attribute id="5" title="X_2" type="double" />
+      <attribute id="6" title="X_3" type="double" />
+      <attribute id="7" title="V" type="double" />
+      <attribute id="8" title="extern" type="boolean" />
+      <attribute id="9" title="spiking" type="boolean" />
+      <attribute id="10" title="public" type="boolean" />
+    </attributes>
+    <nodes>
+      <node id="0" label="0">
+        <attvalues>
+          <attvalue for="0" value="port_in_gpot" />
+          <attvalue for="1" value="port_in_gpot_0_s" />
+          <attvalue for="2" value="receptor/0" />
+        </attvalues>
+      </node>
+      <node id="1" label="1">
+        <attvalues>
+          <attvalue for="0" value="port_in_gpot" />
+          <attvalue for="1" value="port_in_gpot_1_s" />
+          <attvalue for="2" value="receptor/1" />
+        </attvalues>
+      </node>
+      <node id="2" label="2">
+        <attvalues>
+          <attvalue for="0" value="port_in_gpot" />
+          <attvalue for="1" value="port_in_gpot_2_s" />
+          <attvalue for="2" value="receptor/2" />
+        </attvalues>
+      </node>
+      <node id="3" label="3">
+        <attvalues>
+          <attvalue for="0" value="port_in_gpot" />
+          <attvalue for="1" value="port_in_gpot_3_s" />
+          <attvalue for="2" value="receptor/3" />
+        </attvalues>
+      </node>
+      <node id="4" label="4">
+        <attvalues>
+          <attvalue for="0" value="port_in_gpot" />
+          <attvalue for="1" value="port_in_gpot_4_s" />
+          <attvalue for="2" value="receptor/4" />
+        </attvalues>
+      </node>
+      <node id="5" label="5">
+        <attvalues>
+          <attvalue for="3" value="-4.88663480595" />
+          <attvalue for="1" value="sensory_0_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/0" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-4.88663480595" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="6" label="6">
+        <attvalues>
+          <attvalue for="3" value="-1.03929701528" />
+          <attvalue for="1" value="sensory_1_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/1" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-1.03929701528" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="7" label="7">
+        <attvalues>
+          <attvalue for="3" value="-7.72468095598" />
+          <attvalue for="1" value="sensory_2_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/2" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-7.72468095598" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="8" label="8">
+        <attvalues>
+          <attvalue for="3" value="-6.57669640148" />
+          <attvalue for="1" value="sensory_3_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/3" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-6.57669640148" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="9" label="9">
+        <attvalues>
+          <attvalue for="3" value="-8.64170750444" />
+          <attvalue for="1" value="sensory_4_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/4" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-8.64170750444" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="10" label="10">
+        <attvalues>
+          <attvalue for="3" value="-3.04348584027" />
+          <attvalue for="1" value="sensory_5_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/5" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-3.04348584027" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="11" label="11">
+        <attvalues>
+          <attvalue for="3" value="-7.12920296424" />
+          <attvalue for="1" value="sensory_6_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/6" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-7.12920296424" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="12" label="12">
+        <attvalues>
+          <attvalue for="3" value="-5.59860990362" />
+          <attvalue for="1" value="sensory_7_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/7" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-5.59860990362" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="13" label="13">
+        <attvalues>
+          <attvalue for="3" value="-9.02950072044" />
+          <attvalue for="1" value="sensory_8_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/8" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-9.02950072044" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="14" label="14">
+        <attvalues>
+          <attvalue for="3" value="-3.15478571102" />
+          <attvalue for="1" value="sensory_9_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/9" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-3.15478571102" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="15" label="15">
+        <attvalues>
+          <attvalue for="3" value="-9.29929497879" />
+          <attvalue for="1" value="sensory_10_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/10" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-9.29929497879" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="16" label="16">
+        <attvalues>
+          <attvalue for="3" value="-2.72012058549" />
+          <attvalue for="1" value="sensory_11_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/11" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-2.72012058549" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="17" label="17">
+        <attvalues>
+          <attvalue for="3" value="-3.27462396599" />
+          <attvalue for="1" value="sensory_12_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/12" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-3.27462396599" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="18" label="18">
+        <attvalues>
+          <attvalue for="3" value="-4.60334661925" />
+          <attvalue for="1" value="sensory_13_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/13" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-4.60334661925" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="19" label="19">
+        <attvalues>
+          <attvalue for="3" value="-5.01402059784" />
+          <attvalue for="1" value="sensory_14_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/14" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-5.01402059784" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="20" label="20">
+        <attvalues>
+          <attvalue for="3" value="-1.13780693155" />
+          <attvalue for="1" value="sensory_15_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/15" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-1.13780693155" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="21" label="21">
+        <attvalues>
+          <attvalue for="3" value="-3.54793210452" />
+          <attvalue for="1" value="sensory_16_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/16" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-3.54793210452" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="22" label="22">
+        <attvalues>
+          <attvalue for="3" value="-9.0427347002" />
+          <attvalue for="1" value="sensory_17_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/17" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-9.0427347002" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="23" label="23">
+        <attvalues>
+          <attvalue for="3" value="-9.19492363942" />
+          <attvalue for="1" value="sensory_18_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/18" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-9.19492363942" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+      <node id="24" label="24">
+        <attvalues>
+          <attvalue for="3" value="-9.94352410835" />
+          <attvalue for="1" value="sensory_19_s" />
+          <attvalue for="4" value="0.0" />
+          <attvalue for="2" value="/gen/out/spk/19" />
+          <attvalue for="5" value="0.0" />
+          <attvalue for="6" value="0.0" />
+          <attvalue for="7" value="-9.94352410835" />
+          <attvalue for="8" value="true" />
+          <attvalue for="0" value="Olfactory_receptor_spk" />
+          <attvalue for="9" value="true" />
+          <attvalue for="10" value="false" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="0" source="0" target="8" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_0_s-sensory_3_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="1" source="0" target="5" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_0_s-sensory_0_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="2" source="0" target="6" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_0_s-sensory_1_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="3" source="0" target="7" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_0_s-sensory_2_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="4" source="1" target="9" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_1_s-sensory_4_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="5" source="1" target="10" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_1_s-sensory_5_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="6" source="1" target="11" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_1_s-sensory_6_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="7" source="1" target="12" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_1_s-sensory_7_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="8" source="2" target="16" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_2_s-sensory_11_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="9" source="2" target="13" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_2_s-sensory_8_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="10" source="2" target="14" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_2_s-sensory_9_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="11" source="2" target="15" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_2_s-sensory_10_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="12" source="3" target="17" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_3_s-sensory_12_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="13" source="3" target="18" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_3_s-sensory_13_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="14" source="3" target="19" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_3_s-sensory_14_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="15" source="3" target="20" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_3_s-sensory_15_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="16" source="4" target="24" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_4_s-sensory_19_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="17" source="4" target="21" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_4_s-sensory_16_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="18" source="4" target="22" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_4_s-sensory_17_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+      <edge id="19" source="4" target="23" type="directed">
+        <attvalues>
+          <attvalue for="11" value="0.8" />
+          <attvalue for="12" value="0.03" />
+          <attvalue for="13" value="port_in_gpot_4_s-sensory_18_s" />
+          <attvalue for="14" value="1" />
+          <attvalue for="15" value="1" />
+          <attvalue for="16" value="true" />
+          <attvalue for="17" value="-0.05" />
+          <attvalue for="18" value="power_gpot_gpot" />
+          <attvalue for="19" value="2" />
+          <attvalue for="20" value="-0.1" />
+        </attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>

@@ -141,10 +141,10 @@ class LPU(Module, object):
                 assert('selector' in neu.keys())
                 if model == 'port_in_gpot':
                     neu['spiking'] = False
-                    neu['public'] = False
                 else:
                     neu['spiking'] = True
-                    neu['public'] = False
+                neu['public'] = False
+                neu['extern'] = False
             # if an output_port, make sure selector is specified
             if 'public' in neu.keys():
                 if neu['public']:
