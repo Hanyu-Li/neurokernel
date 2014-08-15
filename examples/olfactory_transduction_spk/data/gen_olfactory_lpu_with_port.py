@@ -12,7 +12,7 @@ import scipy.io as sio
 import h5py
 import networkx as nx
 
-def create_lpu(file_name, N_port_in_gpot, N_sensory, N_local, N_output):
+def create_lpu(file_name, N_port_in_gpot, N_sensory, N_local, N_output,verbose=False):
     """
     Create a generic LPU.
 
@@ -37,7 +37,7 @@ def create_lpu(file_name, N_port_in_gpot, N_sensory, N_local, N_output):
     N_output : int
         Number of project neurons.
     """
-    
+
     # Set numbers of neurons:
     neu_type = ('port_in_gpot','sensory', 'local', 'output')
     neu_num = (N_port_in_gpot, N_sensory, N_local, N_output)
@@ -68,40 +68,34 @@ def create_lpu(file_name, N_port_in_gpot, N_sensory, N_local, N_output):
             name = t+"_"+str(i)
             # All local neurons are graded potential only:
             #if t != 'local' or np.random.rand() < 0.5:
-	    if t == 'port_in_gpot':
-		G.node[idx] = {
-		    'model': 'port_in_gpot',
-		    'name': name+'_s',
-		    'selector': 'receptor/%d' % i,
-		}
+            if t == 'port_in_gpot':
+                G.node[idx] = {
+                    'model': 'port_in_gpot',
+                    'name': name+'_s',
+                    'extern': False,
+                    'selector': 'receptor/%d' % i}
             if t == 'sensory':
-		V_data = np.random.uniform(-10,-1)
+                V_data = np.random.uniform(-10,-1)
                 G.node[idx] = {
                     'model': 'Olfactory_receptor_spk',
                     'name': name+'_s',
                     'extern': True if t == 'sensory' else False,
                     'public': True if t == 'output' else False,
                     'spiking': True,
-                    'V': V_data,                    
-		    'V_prev': V_data,
+                    'V': V_data,
+                    'V_prev': V_data,
                     'X_1': 0.0,
                     'X_2': 0.0,
                     'X_3': 0.0}
-		
-                if t == 'output' or 'sensory':
-                    G.node[idx]['selector'] = '/gen/out/spk/' + str(spk_out_id)
-                    spk_out_id += 1 
-		"""
-                if t == 'output' or 'sensory':
-                    G.node[idx]['selector'] = '/gen/out/gpot/' + str(gpot_out_id)
-                    gpot_out_id = 1
-		"""
+
+            if t == 'output' or 'sensory':
+                G.node[idx]['selector'] = '/gen/out/spk/' + str(spk_out_id)
+                spk_out_id += 1
             idx += 1
-	    
-	    print idx
+        if verbose: print idx
 
     # Assume a probability of synapse existence for each group of synapses:
-    # sensory -> local, sensory -> output, local -> output, output -> local:            
+    # sensory -> local, sensory -> output, local -> output, output -> local:
     """
     for r, (i, j) in zip((0.5, 0.1, 0.1, 0.3),
                          ((0, 1), (0, 2), (1, 2), (2,1))):
@@ -144,20 +138,14 @@ def create_lpu(file_name, N_port_in_gpot, N_sensory, N_local, N_output):
     tar_off = sum(neu_num[0:1])
     fan_out = neu_num[1]/neu_num[0]
     for src in range(src_off, src_off+neu_num[0]):
-	for tar in range(tar_off+src*fan_out,tar_off+(src+1)*fan_out):
-	    print src, tar
+        for tar in range(tar_off+src*fan_out,tar_off+(src+1)*fan_out):
+            print src, tar
             name = G.node[src]['name'] + '-' + G.node[tar]['name']
-	    if G.node[src]['model'] == 'port_in_gpot':
+            if G.node[src]['model'] == 'port_in_gpot':
                 G.add_edge(src,tar,type='directed',attr_dict={
-                    'model'       : 'power_gpot_gpot',
+                    'model'       : 'dummy_synapse',
                     'name'        : name,
-                    'class'       : 2 if G.node[tar]['spiking'] is True else 3,
-                    'slope'       : 0.8,
-                    'threshold'   : -0.05,
-                    'power'       : 1,
-                    'saturation'  : 0.03,
-                    'delay'       : 1,
-                    'reverse'     : -0.1,
+                    'class'       : 3,
                     'conductance' : True})
     nx.write_gexf(G, file_name)
 
@@ -251,7 +239,7 @@ if __name__ == '__main__':
                         help='LPU file name')
     parser.add_argument('in_file_name', nargs='?', default='olfactory_input.h5',
                         help='Input file name')
-    parser.add_argument('mat_file_name', nargs='?', default='./2011_03_04_0379.mat',
+    parser.add_argument('mat_file_name', nargs='?', default='',
                         help='Input file name')
     parser.add_argument('-s', type=int,
                         help='Seed random number generator')
@@ -268,5 +256,5 @@ if __name__ == '__main__':
     port_in_gpot_num = 5
     neu_num = [port_in_gpot_num, 20, 0, 0]
 
-    create_input_from_mat(args.in_file_name, args.mat_file_name, neu_num[0], dt, dur, start, stop, I_max)
+    #create_input_from_mat(args.in_file_name, args.mat_file_name, neu_num[0], dt, dur, start, stop, I_max)
     create_lpu(args.lpu_file_name, *neu_num)
