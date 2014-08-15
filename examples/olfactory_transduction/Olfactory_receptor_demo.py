@@ -23,7 +23,7 @@ from neurokernel.tools.comm import get_random_port
 from neurokernel.LPU.LPU import LPU
 
 dt = 1e-4
-dur = 1.0
+dur = 25.0
 steps = int(dur/dt)
 
 parser = argparse.ArgumentParser()
@@ -61,6 +61,14 @@ man = core.Manager(port_data, port_ctrl)
 man.add_brok()
 
 (n_dict, s_dict) = LPU.lpu_parser('./data/olfactory_lpu.gexf.gz')
+'''
+ge = LPU(dt, n_dict, s_dict,
+         input_file='./data/olfactory_input.h5',
+         port_ctrl=port_ctrl,
+         port_data=port_data,
+         device=args.gpu_dev, id='ge',
+         debug=args.debug)
+'''
 ge = LPU(dt, n_dict, s_dict,
          input_file='./data/olfactory_input.h5',
          output_file='olfactory_output.h5', port_ctrl=port_ctrl,
