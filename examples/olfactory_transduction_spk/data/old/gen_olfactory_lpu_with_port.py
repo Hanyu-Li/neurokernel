@@ -12,7 +12,7 @@ import scipy.io as sio
 import h5py
 import networkx as nx
 
-def create_lpu(file_name, receptor_type, N_port_in_gpot, fan_out, verbose=False):
+def create_lpu(file_name, N_port_in_gpot, N_sensory, N_local, N_output,verbose=False):
     """
     Create a generic LPU.
 
@@ -39,8 +39,8 @@ def create_lpu(file_name, receptor_type, N_port_in_gpot, fan_out, verbose=False)
     """
 
     # Set numbers of neurons:
-    neu_type = ('port_in_gpot','sensory')
-    neu_num = (N_port_in_gpot, N_port_in_gpot*fan_out)
+    neu_type = ('port_in_gpot','sensory', 'local', 'output')
+    neu_num = (N_port_in_gpot, N_sensory, N_local, N_output)
 
     # Neuron ids are between 0 and the total number of neurons:
     G = nx.DiGraph()
@@ -50,6 +50,18 @@ def create_lpu(file_name, receptor_type, N_port_in_gpot, fan_out, verbose=False)
     spk_out_id = 0
     gpot_out_id = 0
 
+
+    """
+    #port_in_gpot setup
+    port_in_gpot_num = N_port_in_gpot
+    for i in range(port_in_gpot_num):
+        name = "port_in_gpot"+"_"+str(i)
+	G.node[idx] = {
+	    'model': 'port_in_gpot',
+	    'name': name+'_s',
+	}
+	idx+=1;
+	"""
 
     for (t, n) in zip(neu_type, neu_num):
         for i in range(n):
@@ -61,8 +73,8 @@ def create_lpu(file_name, receptor_type, N_port_in_gpot, fan_out, verbose=False)
                     'model': 'port_in_gpot',
                     'name': name+'_s',
                     'extern': False,
-                    'selector': '/%s/%d' % (receptor_type[i],i)}
-            elif t == 'sensory':
+                    'selector': 'receptor/%d' % i}
+            if t == 'sensory':
                 V_data = np.random.uniform(-10,-1)
                 G.node[idx] = {
                     'model': 'Olfactory_receptor_spk',
@@ -76,9 +88,9 @@ def create_lpu(file_name, receptor_type, N_port_in_gpot, fan_out, verbose=False)
                     'X_2': 0.0,
                     'X_3': 0.0}
 
-		if t == 'output' or 'sensory':
-		    G.node[idx]['selector'] = '/olfactory_receptor/out/spk/' + str(spk_out_id)
-		    spk_out_id += 1
+            if t == 'output' or 'sensory':
+                G.node[idx]['selector'] = '/gen/out/spk/' + str(spk_out_id)
+                spk_out_id += 1
             idx += 1
         if verbose: print idx
 
@@ -127,7 +139,7 @@ def create_lpu(file_name, receptor_type, N_port_in_gpot, fan_out, verbose=False)
     fan_out = neu_num[1]/neu_num[0]
     for src in range(src_off, src_off+neu_num[0]):
         for tar in range(tar_off+src*fan_out,tar_off+(src+1)*fan_out):
-            #print src, tar
+            print src, tar
             name = G.node[src]['name'] + '-' + G.node[tar]['name']
             if G.node[src]['model'] == 'port_in_gpot':
                 G.add_edge(src,tar,type='directed',attr_dict={
@@ -174,7 +186,7 @@ def create_input(file_name, N_sensory, dt=1e-4, dur=1.0, start=0.3, stop=0.6, I_
                          dtype=np.float64,
                          data=I)
 
-def create_input_from_mat(file_name, mat_file_name, N_sensory, dt=1e-4, dur=1.0):
+def create_input_from_mat(file_name, mat_file_name, N_sensory, dt=1e-4, dur=1.0, start=0.3, stop=0.6, I_max=0.6):
     """
     Create input stimulus for sensory neurons in artificial LPU.
 
@@ -205,6 +217,10 @@ def create_input_from_mat(file_name, mat_file_name, N_sensory, dt=1e-4, dur=1.0)
     dt = mat.get('dt')/1000
     dur = dt * Ostim_data.shape[0]
 
+
+
+
+
     Nt = int(dur/dt)
     t  = np.arange(0, dt*Nt, dt)
 
@@ -216,11 +232,6 @@ def create_input_from_mat(file_name, mat_file_name, N_sensory, dt=1e-4, dur=1.0)
         f.create_dataset('array', (Nt, N_sensory),
                          dtype=np.float64,
                          data=I)
-def parse_receptor_type(receptor_type_file_name):
-    f = open(receptor_type_file_name)
-    receptor_type = f.read().splitlines()
-    return receptor_type
-    
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
@@ -229,9 +240,7 @@ if __name__ == '__main__':
     parser.add_argument('in_file_name', nargs='?', default='olfactory_input.h5',
                         help='Input file name')
     parser.add_argument('mat_file_name', nargs='?', default='./2011_03_04_0379.mat',
-                        help='Mat file name')
-    parser.add_argument('receptor_type_file_name', nargs='?', default='./receptor_type.txt',
-                        help='Receptor Type file name')
+                        help='Input file name')
     parser.add_argument('-s', type=int,
                         help='Seed random number generator')
     args = parser.parse_args()
@@ -240,12 +249,12 @@ if __name__ == '__main__':
         np.random.seed(args.s)
     dt = 1e-4
     dur = 25.0
+    start = 0.0
+    stop = 1.0
+    I_max = 0.6
     #neu_num = [np.random.randint(31, 40) for i in xrange(3)]
-    fan_out = 5
-    receptor_type = parse_receptor_type(args.receptor_type_file_name)
-    port_in_gpot_num = len(receptor_type)
-    neu_num = port_in_gpot_num*fan_out
+    port_in_gpot_num = 5
+    neu_num = [port_in_gpot_num, 20, 0, 0]
 
-
-    create_input_from_mat(args.in_file_name, args.mat_file_name,neu_num, dt, dur)
-    create_lpu(args.lpu_file_name, receptor_type, port_in_gpot_num, fan_out)
+    create_input_from_mat(args.in_file_name, args.mat_file_name, neu_num[0], dt, dur, start, stop, I_max)
+    create_lpu(args.lpu_file_name, *neu_num)
