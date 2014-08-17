@@ -239,7 +239,7 @@ if __name__ == '__main__':
                         help='LPU file name')
     parser.add_argument('in_file_name', nargs='?', default='olfactory_input.h5',
                         help='Input file name')
-    parser.add_argument('mat_file_name', nargs='?', default='',
+    parser.add_argument('mat_file_name', nargs='?', default='./2011_03_04_0379.mat',
                         help='Input file name')
     parser.add_argument('-s', type=int,
                         help='Seed random number generator')
@@ -256,5 +256,5 @@ if __name__ == '__main__':
     port_in_gpot_num = 5
     neu_num = [port_in_gpot_num, 20, 0, 0]
 
-    #create_input_from_mat(args.in_file_name, args.mat_file_name, neu_num[0], dt, dur, start, stop, I_max)
+    create_input_from_mat(args.in_file_name, args.mat_file_name, neu_num[0], dt, dur, start, stop, I_max)
     create_lpu(args.lpu_file_name, *neu_num)

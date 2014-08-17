@@ -2,6 +2,7 @@
 *.pyc
 
 #
+*.ipynb_checkpoints
 *.mat
 *.mp4
 *.avi
@@ -13,6 +14,7 @@
 *qsub.py
 *gexf.gz
 *temp*
+*.swp
 neurokernel.egg-info
 neurokernel/neurokernel.log
 !neurokernel/examples/retina_lamina/image1.mat
