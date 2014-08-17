@@ -146,7 +146,7 @@ def create_lpu(file_name, N_port_in_gpot, N_sensory, N_local, N_output,verbose=F
                     'model'       : 'dummy_synapse',
                     'name'        : name,
                     'class'       : 3,
-                    'conductance' : True})
+                    'conductance' : False})
     nx.write_gexf(G, file_name)
 
 def create_input(file_name, N_sensory, dt=1e-4, dur=1.0, start=0.3, stop=0.6, I_max=0.6):
