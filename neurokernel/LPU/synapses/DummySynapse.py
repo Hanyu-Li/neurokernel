@@ -24,13 +24,13 @@ __global__ void dummy_synapse(
     int dl;
     int col;
 
-    for( int i=tid; i<num; i+=tot_threads ){
+    for( int i=tid; i<syn_num; i+=tot_threads ){
         dl = delay[i];
         col = buffer_curr - dl;
         if( col < 0 )
             col += buffer_delay_steps;
         pre = pre_neu_idx[i];
-        cond[i] = neu_state[ col*buffer_ld+pre ];
+        cond[i] = syn_state[ col*buffer_ld+pre ];
     }
     return;
 }

@@ -33,7 +33,6 @@ from synapses import *
 
 import pdb
 
-
 PORT_IN_GPOT = 'port_in_gpot'
 PORT_IN_SPK = 'port_in_spk'
 
@@ -347,7 +346,7 @@ class LPU(Module, object):
             
             if s['conductance'][0]:
                 cond_post.extend(s['post'])
-                reverse.extend(s['reverse'])
+		reverse.extend(s['reverse'])
                 cond_pre.extend(range(count, count+len(s['post'])))
                 count += len(s['post'])
                 if 'delay' in s:
@@ -833,6 +832,7 @@ class LPU(Module, object):
     def _load_synapses(self):
         self._synapse_classes = basesynapse.BaseSynapse.__subclasses__()
         self._synapse_names = [cls.__name__ for cls in self._synapse_classes]
+
 
     @property
     def one_time_import(self):

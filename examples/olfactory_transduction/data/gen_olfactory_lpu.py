@@ -76,7 +76,7 @@ def create_lpu(file_name, receptor_type, N_port_in_gpot, fan_out, verbose=False)
                     'X_2': 0.0,
                     'X_3': 0.0}
 
-		if t == 'output' or 'sensory':
+		if t == 'sensory':
 		    G.node[idx]['selector'] = '/olfactory_receptor/out/spk/' + str(spk_out_id)
 		    spk_out_id += 1
             idx += 1
@@ -131,9 +131,10 @@ def create_lpu(file_name, receptor_type, N_port_in_gpot, fan_out, verbose=False)
             name = G.node[src]['name'] + '-' + G.node[tar]['name']
             if G.node[src]['model'] == 'port_in_gpot':
                 G.add_edge(src,tar,type='directed',attr_dict={
-                    'model'       : 'dummy_synapse',
+                    'model'       : 'DummySynapse',
                     'name'        : name,
                     'class'       : 3,
+		    'reverse'	  : -0.1,
                     'conductance' : True})
     nx.write_gexf(G, file_name)
 
