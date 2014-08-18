@@ -30,7 +30,7 @@ __global__ void dummy_synapse(
         if( col < 0 )
             col += buffer_delay_steps;
         pre = pre_neu_idx[i];
-        cond[i] = syn_state[ col*buffer_ld+pre ];
+        syn_state[i] = buffer[ col*buffer_ld+pre ];
     }
     return;
 }
