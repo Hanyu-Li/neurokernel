@@ -108,17 +108,15 @@ class Olfactory_receptor(BaseNeuron):
 	template = Template("""
     #include "stdio.h"
     #define NUM_OF_NEURON {{num_neurons}}
-    #define assoc_adjust 2  //association rate adjustment ratio
-    #define dissoc_adjust 3 //dissociation rate adjustment ratio
     #define cap 4.299e-3          // capacitance, [4.299e-3nF]
-    #define cc1lin 1.224 * assoc_adjust         // Ca2+ association rate with CaM, [s^-1]
-    #define cc2 22.89 * dissoc_adjust            // CaCaM dissociation rate into Ca and CaM, [s^-1]
-    #define ck1lin 12.72 * assoc_adjust         // CaMK activation rate by CaCaM, [s^-1]
-    #define ck2 0.5564 * dissoc_adjust            // CaMK deactivation rate, [s^-1]
+    #define cc1lin 1.224          // Ca2+ association rate with CaM, [s^-1]
+    #define cc2 22.89             // CaCaM dissociation rate into Ca and CaM, [s^-1]
+    #define ck1lin 12.72          // CaMK activation rate by CaCaM, [s^-1]
+    #define ck2 0.5564            // CaMK deactivation rate, [s^-1]
     #define clmax 1.013           // maximal g of Cl(Ca) channels, [1.013nS]
     #define cnmax 1.277           // maximal g of CNG channels, [1.277nS]
-    #define cx1lin 1.171 * assoc_adjust         // IX activation rate by Ca2+, [s^-1]
-    #define cx2 16.12 * dissoc_adjust             // IX deactivation rate, [s^-1]
+    #define cx1lin 1.171          // IX activation rate by Ca2+, [s^-1]
+    #define cx2 16.12             // IX deactivation rate, [s^-1]
     #define ef 2.162              // Ca2+ extrusion rate constant by NCX, [s^-1]
     #define F 9.649e4             // Faraday's constant, [C/mol]
     #define Cvol 4.2191e-7        // ciliary volume, []
@@ -132,7 +130,7 @@ class Olfactory_receptor(BaseNeuron):
     #define inf 1.26              // CNG current carried by Ca, [1.26uM*pC^-1]
     #define inhmax 1.396          // maximal CNG channel inhibition factor
     #define k1 0.02351            // odorant binding rate to receptor, [0.02351(uM*s)^-1]
-    #define k2 9.915 * assoc_adjust             // G-protein activation rate per bound receptor complex, [s^-1]
+    #define k2 9.915              // G-protein activation rate per bound receptor complex, [s^-1]
     #define kI 0.7037             // IX concentration needed to exert a half-maximal
 			     // inhibitory effect (IC_50), [0.7037uM]
     #define kinh 0.3901           // aCaMK concentration needed for half-maximal 
@@ -141,16 +139,16 @@ class Olfactory_receptor(BaseNeuron):
 			     // inhibition of the CNG channel, [0.8951uM]
     #define n1 1.639              // Hill coeff. of the CNG ch. activation function
     #define n2 2.276              // Hill coeff. of the Cl(Ca) ch. activation function
-    #define nI 3.705 * assoc_adjust             // Steepness of the decreasing sigmoid representing
+    #define nI 3.705              // Steepness of the decreasing sigmoid representing
 			     // IX-mediated inhibition
-    #define ninh 1.372 * assoc_adjust           // Steepness of the decreasing sigmoid representing
+    #define ninh 1.372            // Steepness of the decreasing sigmoid representing
 			     // aCaMK-mediated inhibition of cAMP synthesis
-    #define ninhcng 1.112 * assoc_adjust        // Steepness of the sigmoid inhcng representing
+    #define ninhcng 1.112         // Steepness of the sigmoid inhcng representing
 			     // the fold increase in K_1/2 of the CNG channel
 			     // as a function of CaCaM concentration
-    #define pd 10.88 * dissoc_adjust              // cAMP molecule degradation rate, [s^-1]
-    #define r1 6.911 * dissoc_adjust              // odorant unbinding rate from receptor, [s^-1]
-    #define r2 4.055 * dissoc_adjust              // G-protein deactivation rate, [s^-1]
+    #define pd 10.88              // cAMP molecule degradation rate, [s^-1]
+    #define r1 6.911              // odorant unbinding rate from receptor, [s^-1]
+    #define r2 4.055              // G-protein deactivation rate, [s^-1]
     #define Rtot 1                // total number of receptor, [part]
     #define smax 91.09            // maximal cAMP production rate by adenylyl cyclase 
 			     // per aG, [91.09uM/s]

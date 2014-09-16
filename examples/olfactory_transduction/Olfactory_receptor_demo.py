@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 """
-Generic LPU demo
+Olfactory Transduction LPU demo
 
 Notes
 -----
 Generate input file and LPU configuration by running
 
 cd data
-python gen_generic_lpu.py
+python gen_olfactory_lpu.py
 """
 
 import argparse
@@ -61,21 +61,13 @@ man = core.Manager(port_data, port_ctrl)
 man.add_brok()
 
 (n_dict, s_dict) = LPU.lpu_parser('./data/olfactory_lpu.gexf.gz')
-'''
-ge = LPU(dt, n_dict, s_dict,
-         input_file='./data/olfactory_input.h5',
-         port_ctrl=port_ctrl,
-         port_data=port_data,
-         device=args.gpu_dev, id='ge',
-         debug=args.debug)
-'''
-ge = LPU(dt, n_dict, s_dict,
+olf = LPU(dt, n_dict, s_dict,
          input_file='./data/olfactory_input.h5',
          output_file='olfactory_output.h5', port_ctrl=port_ctrl,
          port_data=port_data,
-         device=args.gpu_dev, id='ge',
+         device=args.gpu_dev, id='olf',
          debug=args.debug)
-man.add_mod(ge)
+man.add_mod(olf)
 
 man.start(steps=args.steps)
 man.stop()

@@ -10,11 +10,11 @@ from pycuda.compiler import SourceModule
 import tables
 from jinja2 import Template
 
-class Olfactory_receptor(BaseNeuron):
-    def __init__(self, n_dict, spk, dt , debug=False, LPU_id=None):
+class Olfactory_receptor_gpot(BaseNeuron):
+    def __init__(self, n_dict, V, dt , debug=False, LPU_id=None):
         self.num_neurons = len(n_dict['id'])
         self.LPU_id = None
-        super(Olfactory_receptor, self).__init__(n_dict, spk, dt, debug, LPU_id)
+        super(Olfactory_receptor_gpot, self).__init__(n_dict, V, dt, debug, LPU_id)
         self.debug = debug
 
         self.dt = dt
@@ -31,21 +31,18 @@ class Olfactory_receptor(BaseNeuron):
 	self.state = garray.to_gpu(np.asarray(init_state, dtype=np.double))
 
 
-        #self.V = V
-	self.spk = spk
-	self.spk_flag = 0
-	self.V       = garray.to_gpu(np.asarray(n_dict['V'],       dtype=np.double))
-	#self.spk = garray.to_gpu(np.asarray(np.zeros((self.num_neurons,1)), dtype=np.int32))
+        self.V = V
+	#self.V       = garray.to_gpu(np.asarray(n_dict['V'],       dtype=np.double))
+	self.spk = garray.to_gpu(np.asarray(np.zeros((self.num_neurons,1)), dtype=np.int32))
 	self.V_prev  = garray.to_gpu(np.asarray(n_dict['V_prev'],  dtype=np.double))
 	self.X_1     = garray.to_gpu(np.asarray(n_dict['X_1'],     dtype=np.double))
 	self.X_2     = garray.to_gpu(np.asarray(n_dict['X_2'],     dtype=np.double))
 	self.X_3     = garray.to_gpu(np.asarray(n_dict['X_3'],     dtype=np.double))
 	#self.I_ext = garray.to_gpu(np.asarray([1]*self.num_neurons, dtype=np.double))
 	
-        #cuda.memcpy_htod(int(self.V), np.asarray(n_dict['V'], dtype=np.double))
-        #cuda.memcpy_htod(int(self.spk), np.asarray(np.zeros((self.num_neurons,1)), dtype=np.double))
+        cuda.memcpy_htod(int(self.V), np.asarray(n_dict['V'], dtype=np.double))
 	self.update_olfactory_transduction = self.get_olfactory_transduction_kernel()
-	self.update_hhn = self.get_multi_step_hhn_kernel()
+	self.update_hhn = self.get_hhn_kernel()
 
         if self.debug:
             if self.LPU_id is None:
@@ -53,10 +50,7 @@ class Olfactory_receptor(BaseNeuron):
             self.I_file = tables.openFile(self.LPU_id + "_I.h5", mode="w")
             self.I_file.createEArray("/","array", \
                                      tables.Float64Atom(), (0,self.num_neurons))
-	    
-            self.V_file = tables.openFile(self.LPU_id + "_V.h5", mode="w")
-            self.V_file.createEArray("/","array", \
-                                     tables.Float64Atom(), (0,self.num_neurons))
+	#debugging
 
 
     @property
@@ -65,60 +59,26 @@ class Olfactory_receptor(BaseNeuron):
     def eval(self, st=None):
 	self.update_olfactory_transduction.prepared_async_call(self.grid, self.block,st, self.dt, self.I.gpudata, self.binding_rate.gpudata, self.state.gpudata, self.I_drive.gpudata)
 	 
-	self.update_hhn.prepared_async_call(self.grid, self.block, st, self.spk, self.num_neurons, self.dt*1000,self.I_drive.gpudata,self.X_1.gpudata, self.X_2.gpudata, self.X_3.gpudata, self.V.gpudata, self.V_prev.gpudata)
-	"""
-	self.spk_flag = 0
 	for i in range(10):
-	    self.update_hhn.prepared_async_call(self.grid, self.block, st, self.spk, self.num_neurons, self.dt*100,self.I_drive.gpudata,self.X_1.gpudata, self.X_2.gpudata, self.X_3.gpudata, self.V.gpudata, self.V_prev.gpudata)
-	    if self.spk == 1:
-		self.spk_flag = 1
-	self.spk = self.spk_flag
-	"""
-		
-
+	    self.update_hhn.prepared_async_call(self.grid, self.block, st, self.spk.gpudata, self.num_neurons, self.dt*100,self.I_drive.gpudata,self.X_1.gpudata, self.X_2.gpudata, self.X_3.gpudata, self.V, self.V_prev.gpudata)
         if self.debug:
             self.I_file.root.array.append(self.I.get().reshape((1,-1)))
-            self.V_file.root.array.append(self.V.get().reshape((1,-1)))
 
 
-    """
-    @property
-    def update_I_override(self): return True
-
-    def update_I(self, synapse_state, st=None):
-        self.I.fill(0)
-        if self._pre.size>0:
-            self._update_I_non_cond.prepared_async_call(self._grid_get_input,\
-                self._block_get_input, st, int(synapse_state), \
-                self._cum_num_dendrite.gpudata, self._num_dendrite.gpudata, self._pre.gpudata,
-                self.I.gpudata)
-        if self._cond_pre.size>0:
-            self._update_I_cond.prepared_async_call(self._grid_get_input,\
-                self._block_get_input, st, int(synapse_state), \
-                self._cum_num_dendrite_cond.gpudata, self._num_dendrite_cond.gpudata,
-                self._cond_pre.gpudata, self.I.gpudata, self.V.gpudata, \
-                self._V_rev.gpudata)
-        
-
-
-
-    """
     def get_olfactory_transduction_kernel(self):
 	
 	template = Template("""
     #include "stdio.h"
     #define NUM_OF_NEURON {{num_neurons}}
-    #define assoc_adjust 2  //association rate adjustment ratio
-    #define dissoc_adjust 3 //dissociation rate adjustment ratio
     #define cap 4.299e-3          // capacitance, [4.299e-3nF]
-    #define cc1lin 1.224 * assoc_adjust         // Ca2+ association rate with CaM, [s^-1]
-    #define cc2 22.89 * dissoc_adjust            // CaCaM dissociation rate into Ca and CaM, [s^-1]
-    #define ck1lin 12.72 * assoc_adjust         // CaMK activation rate by CaCaM, [s^-1]
-    #define ck2 0.5564 * dissoc_adjust            // CaMK deactivation rate, [s^-1]
+    #define cc1lin 1.224          // Ca2+ association rate with CaM, [s^-1]
+    #define cc2 22.89             // CaCaM dissociation rate into Ca and CaM, [s^-1]
+    #define ck1lin 12.72          // CaMK activation rate by CaCaM, [s^-1]
+    #define ck2 0.5564            // CaMK deactivation rate, [s^-1]
     #define clmax 1.013           // maximal g of Cl(Ca) channels, [1.013nS]
     #define cnmax 1.277           // maximal g of CNG channels, [1.277nS]
-    #define cx1lin 1.171 * assoc_adjust         // IX activation rate by Ca2+, [s^-1]
-    #define cx2 16.12 * dissoc_adjust             // IX deactivation rate, [s^-1]
+    #define cx1lin 1.171          // IX activation rate by Ca2+, [s^-1]
+    #define cx2 16.12             // IX deactivation rate, [s^-1]
     #define ef 2.162              // Ca2+ extrusion rate constant by NCX, [s^-1]
     #define F 9.649e4             // Faraday's constant, [C/mol]
     #define Cvol 4.2191e-7        // ciliary volume, []
@@ -132,7 +92,7 @@ class Olfactory_receptor(BaseNeuron):
     #define inf 1.26              // CNG current carried by Ca, [1.26uM*pC^-1]
     #define inhmax 1.396          // maximal CNG channel inhibition factor
     #define k1 0.02351            // odorant binding rate to receptor, [0.02351(uM*s)^-1]
-    #define k2 9.915 * assoc_adjust             // G-protein activation rate per bound receptor complex, [s^-1]
+    #define k2 9.915              // G-protein activation rate per bound receptor complex, [s^-1]
     #define kI 0.7037             // IX concentration needed to exert a half-maximal
 			     // inhibitory effect (IC_50), [0.7037uM]
     #define kinh 0.3901           // aCaMK concentration needed for half-maximal 
@@ -141,16 +101,16 @@ class Olfactory_receptor(BaseNeuron):
 			     // inhibition of the CNG channel, [0.8951uM]
     #define n1 1.639              // Hill coeff. of the CNG ch. activation function
     #define n2 2.276              // Hill coeff. of the Cl(Ca) ch. activation function
-    #define nI 3.705 * assoc_adjust             // Steepness of the decreasing sigmoid representing
+    #define nI 3.705              // Steepness of the decreasing sigmoid representing
 			     // IX-mediated inhibition
-    #define ninh 1.372 * assoc_adjust           // Steepness of the decreasing sigmoid representing
+    #define ninh 1.372            // Steepness of the decreasing sigmoid representing
 			     // aCaMK-mediated inhibition of cAMP synthesis
-    #define ninhcng 1.112 * assoc_adjust        // Steepness of the sigmoid inhcng representing
+    #define ninhcng 1.112         // Steepness of the sigmoid inhcng representing
 			     // the fold increase in K_1/2 of the CNG channel
 			     // as a function of CaCaM concentration
-    #define pd 10.88 * dissoc_adjust              // cAMP molecule degradation rate, [s^-1]
-    #define r1 6.911 * dissoc_adjust              // odorant unbinding rate from receptor, [s^-1]
-    #define r2 4.055 * dissoc_adjust              // G-protein deactivation rate, [s^-1]
+    #define pd 10.88              // cAMP molecule degradation rate, [s^-1]
+    #define r1 6.911              // odorant unbinding rate from receptor, [s^-1]
+    #define r2 4.055              // G-protein deactivation rate, [s^-1]
     #define Rtot 1                // total number of receptor, [part]
     #define smax 91.09            // maximal cAMP production rate by adenylyl cyclase 
 			     // per aG, [91.09uM/s]
@@ -365,85 +325,3 @@ class Olfactory_receptor(BaseNeuron):
 
 	return func
 
-    def get_multi_step_hhn_kernel(self):
-	template = Template("""
-	#include <stdio.h>
-	#define g_Na 120.0
-	#define g_K  36.0
-	#define g_L  0.3
-	#define E_K  (-12.0)
-	#define E_Na 115.0
-	#define E_L  10.613
-
-	__global__ void
-	hhn_model(int *spk, int num_neurons, {{type}} _dt, {{type}}* I_pre,  \
-		  {{type}}* X_1, {{type}}* X_2, {{type}}* X_3, {{type}}* g_V, {{type}}* V_prev)
-	{
-	    int cart_id = blockIdx.x * blockDim.x + threadIdx.x;
-
-	    if(cart_id < num_neurons)
-	    {
-		{{type}} V = g_V[cart_id];
-		{{type}} bias = 10;
-		spk[cart_id] = 0;
-
-		int step = 1;
-		{{type}} dt = 0.01;
-		if(_dt > dt)
-		{
-		    step = _dt/dt;
-		}
-
-		{{type}} a[3];
-
-		int spk_count = 0;
-		//spk[cart_id] = 1;
-		//return;
-
-		for(int i=0;i<step;i++){
-		    V = g_V[cart_id];
-		    a[0] = (10-V)/(100*(exp((10-V)/10)-1));
-		    X_1[cart_id] = a[0]*dt - X_1[cart_id]*(dt*(a[0] + exp(-V/80)/8) - 1);
-		   
-		    a[1] = (25-V)/(10*(exp((25-V)/10)-1));
-		    X_2[cart_id] = a[1]*dt - X_2[cart_id]*(dt*(a[1] + 4*exp(-V/18)) - 1);
-		   
-		    a[2] = 0.07*exp(-V/20);
-		    X_3[cart_id] = a[2]*dt - X_3[cart_id]*(dt*(a[2] + 1/(exp((30-V)/10)+1)) - 1);
-
-		    V = V + dt * (I_pre[cart_id]+bias - \
-		       (g_K * pow(X_1[cart_id], 4) * (V - E_K) + \
-			g_Na * pow(X_2[cart_id], 3) * X_3[cart_id] * (V - E_Na) + \
-			g_L * (V - E_L)));
-
-		    if(V_prev[cart_id] <= g_V[cart_id] && g_V[cart_id] > V) {
-			spk[cart_id] = 1;
-		    }
-		    
-		    V_prev[cart_id] = g_V[cart_id];
-		    g_V[cart_id] = V;
-		}
-	    }
-	}
-	""")
-	
-	dtype = np.double
-	scalartype = dtype.type if dtype.__class__ is np.dtype else dtype
-	#hhn_update_block = (128,1,1)
-	#hhn_update_grid = ((num_neurons - 1) / 128 + 1, 1)
-	self.block = (128,1,1)
-	self.grid = ((self.num_neurons - 1) / 128 + 1, 1)
-	mod = SourceModule(template.render(type=dtype_to_ctype(dtype)), options=["--ptxas-options=-v"])
-	func = mod.get_function("hhn_model")
-	
-	func.prepare([np.intp,       # spk
-		      np.int32,      # num_neurons
-		      scalartype,     # dt
-		      np.intp,        # I_pre
-		      np.intp,        # X1
-		      np.intp,        # X2
-		      np.intp,        # X3
-		      np.intp,        # g_V                 
-		      np.intp])       # V_pre
-
-	return func
