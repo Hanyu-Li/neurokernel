@@ -1,6 +1,7 @@
 # ignore compiled python
 *.pyc
-
+build
+dist
 #
 *.ipynb_checkpoints
 *.mat
@@ -15,7 +16,7 @@
 *gexf.gz
 *temp*
 *.swp
-neurokernel.egg-info
+*.egg-info
 neurokernel/neurokernel.log
 !neurokernel/examples/retina_lamina/image1.mat
 !examples/olfactory_transduction/data/m/2011_03_09_0005.mat
