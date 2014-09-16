@@ -202,7 +202,7 @@ def create_input_from_mat(file_name, mat_file_name, N_sensory, dt=1e-4, dur=1.0)
     """
     mat = sio.loadmat(mat_file_name)
 
-    Ostim_data = 100*np.array(mat.get('c'), np.float32)
+    Ostim_data = 200*np.array(mat.get('c'), np.float32)
     dt = mat.get('dt')/1000
     dur = dt * Ostim_data.shape[0]
 
